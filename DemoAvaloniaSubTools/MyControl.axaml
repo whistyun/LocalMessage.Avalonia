@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:msg="clr-namespace:LocalMessage.Avalonia;assembly=LocalMessage.Avalonia"
+             xmlns:local="clr-namespace:DemoAvaloniaSubTools"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DemoAvaloniaSubTools.MyControl">
+
+  <UserControl.DataContext>
+    <local:MyControlViewModel/>
+  </UserControl.DataContext>
+
+  <StackPanel>
+
+    <TextBlock>Direct</TextBlock>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+
+      <TextBlock Grid.Row="0" Grid.Column="0">Message1</TextBlock>
+      <TextBlock Grid.Row="1" Grid.Column="0">Message2</TextBlock>
+      <TextBlock Grid.Row="0" Grid.Column="1" Text="{msg:Loc Message1}"/>
+      <TextBlock Grid.Row="1" Grid.Column="1" Text="{msg:Loc Message2}"/>
+    </Grid>
+
+    <TextBlock>Template</TextBlock>
+    <ListBox Items="{Binding Children}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <Border CornerRadius="4" Padding="4">
+            <TextBlock Text="{msg:Loc {Binding Value}}"/>
+          </Border>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+
+  </StackPanel>
+
+</UserControl>
