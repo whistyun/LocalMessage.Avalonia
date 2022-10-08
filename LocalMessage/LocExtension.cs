@@ -9,7 +9,6 @@ using System.Collections.Concurrent;
 #if IS_AVALONIA
 using Avalonia.Data;
 using Avalonia.Markup.Xaml;
-using BindingBase=Avalonia.Data.IBinding;
 
 namespace LocalMessage.Avalonia
 #endif
@@ -111,7 +110,7 @@ namespace LocalMessage.WPF
             var rscTp = asm.GetType(rscNm);
             if (rscTp is null)
             {
-                throw new InvalidOperationException($"Failed to load '{rscNm}' type in '{asmNm}' ams");
+                throw new InvalidOperationException($"Failed to load '{rscNm}' type in '{asmNm}' assembly");
             }
 
             static bool Eq(string t1, string? t2)

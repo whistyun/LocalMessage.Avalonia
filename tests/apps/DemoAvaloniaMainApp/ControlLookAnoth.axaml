@@ -1,0 +1,55 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="450"
+
+             xmlns:local="clr-namespace:DemoAvaloniaMainApp"
+             xmlns:msg="clr-namespace:LocalMessage.Avalonia;assembly=LocalMessage.Avalonia"
+
+             msg:MessageService.ResourceName="DemoAvaloniaMainApp.Another.Resource"
+             
+             x:Class="DemoAvaloniaMainApp.ControlLookAnoth">
+
+  <UserControl.DataContext>
+    <local:MyControlViewModel/>
+  </UserControl.DataContext>
+
+  <StackPanel>
+
+    <TextBlock x:Name="DirectMsg" Text="{msg:Loc Message1}"/>
+
+    <TextBlock x:Name="StyleMsg">
+      <TextBlock.Styles>
+        <Style Selector="TextBlock">
+          <Setter Property="Text" Value="{msg:Loc Message2}"/>
+        </Style>
+      </TextBlock.Styles>
+    </TextBlock>
+
+    <TextBlock x:Name="BindingMsg" Text="{msg:Loc {Binding Value}}"/>
+
+
+
+    <ListBox Items="{Binding Children}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Vertical">
+            <TextBlock x:Name="TemplateDirectMsg" Text="{msg:Loc Message4}"/>
+            <TextBlock x:Name="TemplateStyleMsg">
+              <TextBlock.Styles>
+                <Style Selector="TextBlock">
+                  <Setter Property="Text" Value="{msg:Loc Message5}"/>
+                </Style>
+              </TextBlock.Styles>
+            </TextBlock>
+
+            <TextBlock x:Name="TemplateBindingMsg" Text="{msg:Loc {Binding Value}}"/>
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+
+  </StackPanel>
+
+</UserControl>

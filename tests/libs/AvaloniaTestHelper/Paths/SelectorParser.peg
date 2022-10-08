@@ -1,0 +1,51 @@
+﻿@namespace AvaloniaTestHelper.Paths
+@accessibility internal
+@classname SelectorParser
+
+Chain<Chain>
+ = l:AndCondition _       r:Chain { new Chain(l, r.SetAsDescendantSearch()) } 
+ / l:AndCondition _ ">" _ r:Chain { new Chain(l, r.SetAsChildrenSearch()) }
+ / l:AndCondition                 { new Chain(l) }
+
+AndCondition <ICondition>
+ = cnd:(
+       NameCondition 
+     / ChildCondition
+     / OfTypeCondition
+     / ClassCondition
+     / IsTypeCondition
+     / PropertyCondition
+   )*
+   {
+     new And(cnd)
+   }
+
+ChildCondition <ICondition>
+  = ":nth-child(" offset:Digit ")"                          { new NthChild(Int32.Parse(offset)) }
+  / ":nth-child(" step:Digit "n+" offset:Digit ")"          { new NthChild(Int32.Parse(step), Int32.Parse(offset)) }
+  / ":nth-child(" offset:Digit "+" step:Digit "n" ")"       { new NthChild(Int32.Parse(step), Int32.Parse(offset)) }
+  / ":nth-last-child(" offset:Digit ")"                     { new LastNthChild(Int32.Parse(offset)) }
+  / ":nth-last-child(" step:Digit "n+" offset:Digit ")"     { new LastNthChild(Int32.Parse(step), Int32.Parse(offset)) }
+  / ":nth-last-child(" offset:Digit "+" step:Digit "n" ")"  { new LastNthChild(Int32.Parse(step), Int32.Parse(offset)) }
+
+OfTypeCondition <ICondition>
+  = n:NameToken                 { new OfType(n) }
+  / s:NameToken "|" n:NameToken { new OfType(s, n) }
+
+NameCondition <ICondition>
+  = "#" n:NameToken             { new HasName(n) }
+
+ClassCondition <ICondition>
+  = "." n:NameToken             { new HasClass(n) }
+
+IsTypeCondition <ICondition>
+  = ":is(" n:NameToken ")"                 { new IsType(n) }
+  / ":is(" s:NameToken "|" n:NameToken ")" { new IsType(s, n) }
+
+PropertyCondition <ICondition>
+  = "[" _ n:NameToken _ "=" _ v:([^\]]+) _ "]" { new Property(n, String.Join("", v)) }
+
+NameToken <string> = ([a-zA-Z][_a-zA-Z0-9]*)
+Digit <string> = [0-9]
+
+_ = [ \t\r\n]+
