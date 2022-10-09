@@ -27,7 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DemoAvaloniaSubTools\DemoAvaloniaSubTools.csproj" />
-    <ProjectReference Include="..\..\..\LocalMessage\LocalMessage.Avalonia.csproj" />
+    <ProjectReference Include="..\..\..\LocalMessage.Avalonia\LocalMessage.Avalonia.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Another\Resource.Designer.cs">

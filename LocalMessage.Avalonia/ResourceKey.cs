@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LocalMessage
+namespace LocalMessage.Avalonia
 {
     internal struct ResourceKey : IEquatable<ResourceKey>
     {

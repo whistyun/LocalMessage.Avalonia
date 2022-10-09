@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\LocalMessage\LocalMessage.Avalonia.csproj" />
+    <ProjectReference Include="..\..\..\LocalMessage.Avalonia\LocalMessage.Avalonia.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.18" />

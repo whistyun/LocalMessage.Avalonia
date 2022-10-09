@@ -1,17 +1,8 @@
 ﻿using System.Resources;
-
-#if IS_AVALONIA
 using Avalonia.Data;
-using BindingBase = Avalonia.Data.IBinding;
+using LocalMessage.Avalonia;
 
 namespace LocalMessage.Avalonia
-#endif
-
-#if IS_WPF
-using System.Windows.Data;
-
-namespace LocalMessage.WPF
-#endif
 {
     internal class BindingCreator1 : BindingCreator
     {
@@ -22,7 +13,7 @@ namespace LocalMessage.WPF
             Message = message;
         }
 
-        public override BindingBase Create(ResourceManager manager)
+        public override IBinding Create(ResourceManager manager)
         {
             return new Binding(nameof(MessageService.Culture))
             {

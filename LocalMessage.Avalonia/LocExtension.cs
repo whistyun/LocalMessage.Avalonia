@@ -1,29 +1,16 @@
-﻿using System;
-using LocalMessage.Utils;
-using System.Text.RegularExpressions;
+﻿using Avalonia.Data;
+using Avalonia.Markup.Xaml;
+using System;
 using System.Reflection;
 using System.Linq;
 using System.Resources;
 using System.Collections.Concurrent;
-
-#if IS_AVALONIA
-using Avalonia.Data;
-using Avalonia.Markup.Xaml;
+using LocalMessage.Avalonia.Utils;
 
 namespace LocalMessage.Avalonia
-#endif
-
-#if IS_WPF
-using System.Windows.Data;
-using System.Windows.Markup;
-using System.Xaml;
-
-namespace LocalMessage.WPF
-#endif
 {
     public class LocExtension : MarkupExtension
     {
-        private static Regex s_packPtn = new("^/([^/;]+)(;[^/;]+)*?;component");
         private static ConcurrentDictionary<ResourceKey, ResourceManager> s_cache = new();
 
         private BindingCreator Creator { get; }
@@ -37,6 +24,7 @@ namespace LocalMessage.WPF
         {
             Creator = new BindingCreator1(message);
         }
+
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
@@ -52,16 +40,7 @@ namespace LocalMessage.WPF
                 var baseUri = serviceProvider.Find<IUriContext>().BaseUri;
 
                 // avares://asmname/resourcename 
-                // or
-                // pack://???,,,/asmname:component/???
-                // or
-                // pack://???,,,/???
-                asmNm = baseUri?.Scheme switch
-                {
-                    "avares" => SolveAssemblyNameFromAvares(baseUri),
-                    "pack" => SolveAssemblyNameFromPack(baseUri),
-                    _ => null
-                };
+                asmNm = baseUri?.Scheme == "avares" ? baseUri.Host : null;
             }
 
             if (asmNm is null)
@@ -75,22 +54,12 @@ namespace LocalMessage.WPF
 
             if (rscNm is null)
             {
-                rscNm = $"{asmNm }.Properties.Resource";
+                rscNm = $"{asmNm}.Properties.Resource";
             }
 
             var manager = s_cache.GetOrAdd(new ResourceKey(asmNm, rscNm), Load);
 
             return Creator.Create(manager);
-        }
-
-        private static string SolveAssemblyNameFromAvares(Uri uri) => uri.Host;
-
-        private static string? SolveAssemblyNameFromPack(Uri uri)
-        {
-            var path = uri.LocalPath;
-
-            var match = s_packPtn.Match(path);
-            return match.Success ? match.Groups[1].Value : null;
         }
 
         private static ResourceManager Load(ResourceKey key)

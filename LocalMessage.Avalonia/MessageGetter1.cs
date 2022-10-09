@@ -1,21 +1,9 @@
-﻿using System;
+﻿using Avalonia.Data.Converters;
+using System;
 using System.Resources;
 using System.Globalization;
 
-#if IS_AVALONIA
-using Avalonia;
-using Avalonia.Data;
-using Avalonia.Data.Converters;
-using Avalonia.Markup.Xaml;
-
 namespace LocalMessage.Avalonia
-#endif
-
-#if IS_WPF
-using System.Windows.Data;
-
-namespace LocalMessage.WPF
-#endif
 {
     internal class MessageGetter1
     : IValueConverter

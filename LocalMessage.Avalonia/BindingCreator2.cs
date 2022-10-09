@@ -1,17 +1,8 @@
-﻿using System.Resources;
-
-#if IS_AVALONIA
-using Avalonia.Data;
-using BindingBase = Avalonia.Data.IBinding;
+﻿using Avalonia.Data;
+using System.Resources;
+using LocalMessage.Avalonia;
 
 namespace LocalMessage.Avalonia
-#endif
-
-#if IS_WPF
-using System.Windows.Data;
-
-namespace LocalMessage.WPF
-#endif
 {
     internal class BindingCreator2 : BindingCreator
     {
@@ -22,7 +13,7 @@ namespace LocalMessage.WPF
             MessageBinding = messageBinding;
         }
 
-        public override BindingBase Create(ResourceManager manager)
+        public override IBinding Create(ResourceManager manager)
         {
             var binding = new MultiBinding()
             {

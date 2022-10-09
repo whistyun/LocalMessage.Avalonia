@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace LocalMessage.Utils
+namespace LocalMessage.Avalonia.Utils
 {
     internal static class SearviceProviderExt
     {

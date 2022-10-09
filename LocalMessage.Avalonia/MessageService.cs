@@ -1,20 +1,9 @@
-﻿using System;
+﻿using Avalonia;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
-
-
-#if IS_AVALONIA
-using Avalonia;
 namespace LocalMessage.Avalonia
-#endif
-
-#if IS_WPF
-using System.Windows;
-namespace LocalMessage.WPF
-#endif
-
 {
     public class MessageService : INotifyPropertyChanged
     {
@@ -52,10 +41,6 @@ namespace LocalMessage.WPF
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
-
-
-#if IS_AVALONIA
         public static readonly AttachedProperty<string?> AssemblyNameProperty
             = AvaloniaProperty.RegisterAttached<MessageService, AvaloniaObject, string?>("AssemblyName", null);
 
@@ -81,34 +66,5 @@ namespace LocalMessage.WPF
         {
             return element.GetValue(ResourceNameProperty) as string;
         }
-#endif
-
-#if IS_WPF
-        public static readonly DependencyProperty AssemblyNameProperty
-            = DependencyProperty.RegisterAttached("AssemblyName", typeof(string), typeof(MessageService));
-
-        public static readonly DependencyProperty ResourceNameProperty
-            = DependencyProperty.RegisterAttached("ResourceName", typeof(string), typeof(MessageService));
-
-        public static void SetAssemblyName(DependencyObject element, string assemblyName)
-        {
-            element.SetValue(AssemblyNameProperty, assemblyName);
-        }
-
-        public static string? SetAssemblyName(DependencyObject element)
-        {
-            return element.GetValue(AssemblyNameProperty) as string;
-        }
-
-        public static void SetResourceName(DependencyObject element, string resourceName)
-        {
-            element.SetValue(ResourceNameProperty, resourceName);
-        }
-
-        public static string? GetResourceName(DependencyObject element)
-        {
-            return element.GetValue(ResourceNameProperty) as string;
-        }
-#endif
     }
 }
