@@ -33,9 +33,16 @@ namespace LocalMessage.Avalonia
                 var rscNm = key.Resource;
 
                 if (asm is null && asmNm is not null)
+                {
                     asm = AppDomain.CurrentDomain
                                    .GetAssemblies()
                                    .FirstOrDefault(asm => asmNm.Equals(asm.GetName().Name, StringComparison.InvariantCultureIgnoreCase));
+
+                    // assembly is not loaded yet.
+                    try { asm ??= Assembly.Load(asmNm); }
+                    catch { }
+                }
+
 
                 if (asm is null)
                 {
