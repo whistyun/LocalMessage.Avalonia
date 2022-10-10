@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoAvaloniaSubTools", "tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalMessage.Avalonia", "LocalMessage.Avalonia\LocalMessage.Avalonia.csproj", "{30360E63-54BA-4EE0-9333-8266D995FBA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalMessage.WPF", "LocalMessage.WPF\LocalMessage.WPF.csproj", "{AB9C778E-6E2B-4B63-BD01-E8FA6AB63979}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{30360E63-54BA-4EE0-9333-8266D995FBA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30360E63-54BA-4EE0-9333-8266D995FBA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30360E63-54BA-4EE0-9333-8266D995FBA1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB9C778E-6E2B-4B63-BD01-E8FA6AB63979}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB9C778E-6E2B-4B63-BD01-E8FA6AB63979}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB9C778E-6E2B-4B63-BD01-E8FA6AB63979}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB9C778E-6E2B-4B63-BD01-E8FA6AB63979}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

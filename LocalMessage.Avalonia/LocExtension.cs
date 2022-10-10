@@ -11,8 +11,6 @@ namespace LocalMessage.Avalonia
 {
     public class LocExtension : MarkupExtension
     {
-        private static ConcurrentDictionary<ResourceKey, ResourceManager> s_cache = new();
-
         private BindingCreator Creator { get; }
 
         public LocExtension(Binding messageBinding)
@@ -32,8 +30,8 @@ namespace LocalMessage.Avalonia
             string? rscNm = null;
 
             var rootObj = serviceProvider.Find<IRootObjectProvider>().RootObject;
-            asmNm = PropUtils.GetAttachedProperty(rootObj, MessageService.AssemblyNameProperty);
-            rscNm = PropUtils.GetAttachedProperty(rootObj, MessageService.ResourceNameProperty);
+            asmNm = PropUtil.GetAttachedProperty(rootObj, MessageService.AssemblyNameProperty);
+            rscNm = PropUtil.GetAttachedProperty(rootObj, MessageService.ResourceNameProperty);
 
             if (asmNm is null)
             {
@@ -57,35 +55,7 @@ namespace LocalMessage.Avalonia
                 rscNm = $"{asmNm}.Properties.Resource";
             }
 
-            var manager = s_cache.GetOrAdd(new ResourceKey(asmNm, rscNm), Load);
-
-            return Creator.Create(manager);
-        }
-
-        private static ResourceManager Load(ResourceKey key)
-        {
-            var asmNm = key.Assembly;
-            var rscNm = key.Resource;
-
-            var asm = AppDomain.CurrentDomain
-                               .GetAssemblies()
-                               .FirstOrDefault(asm => Eq(asmNm, asm.GetName().Name));
-
-            if (asm is null)
-            {
-                throw new InvalidOperationException($"Failed to load Assembly '{asmNm}'");
-            }
-
-            var rscTp = asm.GetType(rscNm);
-            if (rscTp is null)
-            {
-                throw new InvalidOperationException($"Failed to load '{rscNm}' type in '{asmNm}' assembly");
-            }
-
-            static bool Eq(string t1, string? t2)
-                => t1.Equals(t2, StringComparison.InvariantCultureIgnoreCase);
-
-            return new ResourceManager(rscNm, asm);
+            return Creator.Create(MessageService.GetResource(new ResourceKey(asmNm, rscNm)));
         }
     }
 }
